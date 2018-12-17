@@ -205,7 +205,7 @@ void PushMap() //true = column, true = up or left
 
 ```
 
- Because it is such a big piece of code, it may seem slow, but most of it is ignored during a run because of the branching. I could have thought more about condensing it to remove similar code, but it works and it would not become faster by condensing it. I unit tested the method by printing the map before and after push. To do this I used:
+ Because it is such a big piece of code, it may seem slow, but most of it is ignored during a run because of the branching. I could have thought more about condensing it to remove (nearly) duplicate code, but it works and it would not become faster by condensing it. I unit tested the method by printing the map before and after push. To do this I used:
 
 ```C++
 
