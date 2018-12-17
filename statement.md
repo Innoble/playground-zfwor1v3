@@ -1,19 +1,22 @@
 # X-mas Rush Post Mortem
 
-This contest was a lot of fun for me. Also very intense because of the close fight between number 1 and number 2. I ended at rank 2, which is a personal record for me. Very happy with the result. In this post mortem I will try to explain the main things I think I did right and also the things that didn't work for me.
+This contest was a lot of fun for me. Also very intense because of the close fight between number 1 and number 2. I ended at rank 2, which is a personal record for me. Very happy with the result. Congratulations to Jolindien for a decisive win against me (and everyone else).Thanks to the creators of the game, who did a very good job.
+
+In this post mortem I will try to explain the main things I think I did right and also the things that didn't work for me.
 
 ## Contents
 
-+ ### Simulation
-+ ### Pathfinding
-+ ### Search
-+ ### Optimization and other stuff
++ #### Simulation
++ #### Pathfinding
++ #### Search
++ #### Eval
++ #### Optimization and other stuff
 
 ## Simulation
 
 This contest was hard for beginners to get into. This is mainly because of the necessity of a push simulation. Push is complex in that you need to take into account pushes by both players on 7 possible different rows and columns. The difficulty depends greatly on your choice of board representation. I decided to go with a "bitboard". This is a difficult to handle board representation that is very fast.
 
-Bitboards can be efficiënt because they use less memory and be quickly modified using bit operator. My board was an int[9]. The first 7 elements were 7 map rows, the 8th integer was my hand tile and the 9th integer was my opponents hand tile. One of those integer map rows could look like this in terms of individual bits:  1001 0111 1110 1111 0011 1100 1010 
+Bitboards can be efficient because they can be quickly modified using bit operators. My board was an int[9]. The first 7 elements were 7 map rows, the 8th integer was my hand tile and the 9th integer was my opponents hand tile. One of those integer map rows could look like this in terms of individual bits:  1001 0111 1110 1111 0011 1100 1010 
 Basically I used the map tiles we are given as input and only convert them to bits. You can do this as follows:
 
 ```C++
@@ -31,7 +34,7 @@ int StringToBits(string s)
 }
 ```
 
-For quests and players I used a similar representation. For players the first 4 bits where the x -coordinate (could have used 3, reasons below). The next 3 bits where the y-coordinate. I use a player[2] array. I don't track items, only quests. In hindsight I missed an opportunity due to this lack of item tracking, more on that later. For quests I used the same coordinate representation, only I put the item id on bits 7 to 10 and the tile code (1100 etc.) on bits 11 to 14. In this way, everything is represented in integers, which makes sure I can do a fast push method.
+For quests and players I used a similar representation. For players the first 4 bits where the x -coordinate (could have used 3, reasons below). The next 3 bits where the y-coordinate. I use a player[2] array. I don't track items, only quests. In hindsight I missed an opportunity due to this lack of item tracking, more on that later. For quests I used the same coordinate representation, only I put the item id on bits 7 to 10 and the tile code (1100 etc.) on bits 11 to 14. In this way, everything is represented in the form of integers.
 
 
 My Push code you can find below. I show about half of it because it is a big method, but it should be easy to extend to include all possibilities.
@@ -244,6 +247,23 @@ Later on I found a way to generate ALL moves for ALL pushes. During the search f
 
 + Move turn: BFS generated move nodes first layer -> Push with random greedy move -> Push with random greedy move
 + Push turn: Push with cached moves (no pathfinding during 1st layer thanks to cache) -> Push with random greedy -> Push with random greedy
+
+## Eval
+
+As I wrote above, I tried an evaluation based on quest item location and end-of-move location that also included the orientations of the tiles (entrances pointing at eachother = better). This worked well, but to my regret I found out that random moves are better. I also tried distance to edge (both ways, penalized and as a bonus). This didn't help. I added a bonus for item in hand. Not sure if it helped. It's in the final version though. I tried an idea of eulerscheZahl to try to favor landing on random items that are not quest items after item collection. You could get lucky this way and immediately get another item. This seemed a no brainer. I tried it and it failed for me. Only later on, to my embarassment, did I realize this was because I do not track the location of non-quest items during push. Then it makes no sense to do this. I would get non-updated locations that are meaningless. It was too late to add this, but it would not have been an easy change anyway. I would have had to start tracking all items again (doubling the size of my quest array). 
+
+    So in the end I scored 3 things:
+    
+    + Quests completed: 50 points (could be any value)
+    + Quest item in hand: 10 points (not really fitted, just has to be smaller than quest completed)
+    + Win bonus: 300 points. I can't just make this infinite. That would screw up the smitsimax. I just made it high enough to favor the move. I didn't fit this, no time.
+
+
+## Optimization and other stuff
+
+I practiced conversion from C# to C++ a lot on multiplayer arenas and was able to do it in 4 hrs of coding + 3 hrs finding 1 bug. That's a 1900 line bot. Very proud of that. My sim count (defined as 1 push + 1 move) went from 10-30k to 100k as a result of that conversion. Even before conversion, I had quite a lot of sims in C#. I think this is mainly because of the fast BFS, which is the bottleneck. Other than that I do what I always do. Everything is in global arrays and I don't generate any garbage to clean up. 
+
+I coded a deadlock breaker like most of us did. My way was to check the map every turn and if the map was equal to the map in the last turn, I would increment a deadlock count. If it reached 5, I would disallow my last row/col + id choice and assume the opponent only did that choice. I would always do this when I was losing, but I also would do it if the pointcount was less than 9 and I was tied. That way I got very few draws. This was important, because I needed the points from beating players other than Jolindien. It worked quite well (not well enough obviously!).
 
 
 
