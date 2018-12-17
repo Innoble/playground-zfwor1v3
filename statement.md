@@ -7,7 +7,7 @@ This contest was a lot of fun for me. Also very intense because of the close fig
 + ### Simulation
 + ### Pathfinding
 + ### Search
-+ ### Optimization
++ ### Optimization and other stuff
 
 ## Simulation
 
@@ -217,13 +217,32 @@ This outputs a pretty map picture when using lookups with those strings converte
 
 ## Pathfinding
 
-I have 3 pathfinding algorithms, two of which are very fast. I use them as follows:
+I have 3 pathfinding algorithms, two of which are very fast. They all assume you try to get the maximum amount of items. But the greedy one also makes assumptions about the order in which you do it. 
+
+I use them as follows:
 
 + Slow BFS with classes (pathnodes) to run only once, on move turn. I create the first layer of nodes in my search tree this way. I kept this with classes because it was easier and because changing it wouldnt help me. It needed to be different, because I needed to backtrack through the nodes to generate the movement list (strings to output). 
-+ Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way, usually not so many. This BFS is classless, done only with integer arrays. 
++ Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way, usually many. This BFS is classless, using only with integer arrays. 
 + Even faster greedy BFS. This assumes a player will get the closest items first and then the rest. In 99% of cases this will net the same result as the above version. I used this for the deeper search layers. 
 
 I will explain the second version in a separate article because it is much more general, being usable for different multi's and contests.
+
+
+## Search
+
+As people assumed, I used my own Smitsimax algorithm. I didn't want to let people know I used this. It is one thing to give away a tool, but another to tell people when to use it. If people knew what I used to get to rank 1 during contest, they would switch to it much more quickly and catch up more easily. If I had to risk failure by choosing this algorithm, then so should everyone else. Choosing your strategy is part of the challenge. If people already know what is good, then there is no risk to it. For a long time I was not sure I went the right way using this algorithm. I was "stuck" at around rank 10 for a day or two and then I fixed a bug that shot me up to rank 1 by a wide margin. That's when I was sure. 
+
+### Problems with Smitsimax
+
+As others mentioned, the moves in a search are tricky. Pushes are always free choices, not constrained by the opponents' actions. Moves depend on the state of the board. At first I solved this by making only push-nodes and doing my greedy bfs to determine the move options. I picked the best move option by eval. The eval was a very fast lookup created by a key consisting of quest item position, player position and tile orientations. It worked well. Much later I found (to my regret about time lost coding) a random move selection worked even better. So in the end, my moves (excepting the output move in the move turn) were all random. 
+
+I noticed however, that moves inside the search are somehow very unimportant compared to pushes, assuming you always collect the maximum amount of items available. When I first got to rank 1 halfway through the contest, I didn't even have a search on my move turn. I just did a single pathfinding run. My push search was pretty deep and this mattered more. 
+
+Later on I found a way to generate ALL moves for ALL pushes. During the search for the pushturn I could select any combination of depth 1 pushes and use lookups to get all pathfinding endresults. Generating this move cache took less than a millisecond. You would think it would be best to use this to get a Move-node layer after the first push layer and use full smitsimax during the first 3 phases (push-move-push). However, when I did this, my bot performed worse. I unit tested a lot, because I could not believe it, but it really was true. Even with all moves cached it was better to do Push -> Random Cached Move -> Push -> Random greedy move -> Push -> Random greedy move. So no statistics were gathered on move nodes. 
+
+#### Summarized
+
+##### Move turn
 
 
 
