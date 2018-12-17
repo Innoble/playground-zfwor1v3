@@ -146,7 +146,7 @@ void PushMap() //true = column, true = up or left
                 
 				mapCopy[6] &= clear;
 				mapCopy[6] |= (handTile << shift);
-            // the lowest mapTile is set equal to the handTile that is pushed in
+                // the lowest mapTile is set equal to the handTile that is pushed in
 				for (int i = 0; i < 12; i++)
 				{
 					int quest = questsCopy[i];
@@ -214,5 +214,17 @@ string printCodes[]
 ```
 
 This outputs a pretty map picture when using lookups with those strings converted to bits I showed above.
+
+## Pathfinding
+
+I have 3 pathfinding algorithms, two of which are very fast. I use them as follows:
+
++ Slow BFS with classes (pathnodes) to run only once, on move turn. I create the first layer of nodes in my search tree this way. I kept this with classes because it was easier and because changing it wouldnt help me. It needed to be different, because I needed to backtrack through the nodes to generate the movement list (strings to output). 
++ Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way, usually not so many. This BFS is classless, done only with integer arrays. 
++ Even faster greedy BFS. This assumes a player will get the closest items first and then the rest. In 99% of cases this will net the same result as the above version. I used this for the deeper search layers. 
+
+I will explain the second version in a separate article because it is much more general, being usable for different multi's and contests.
+
+
 
 
