@@ -5,6 +5,7 @@ This contest was a lot of fun for me. Also very intense because of the close fig
 ## Contents
 
 + ### Simulation
++ ### Pathfinding
 + ### Search
 + ### Optimization
 
@@ -192,7 +193,7 @@ void PushMap() //true = column, true = up or left
 
 ```
 
- Because it is such a big piece of code, it may seem slow, but most of it is ignored during a run because of the branching. I could have thought more about condensing it, but it works and it won't become faster by condensing it. I unit tested the method by printing the map before and after push. To do this I used:
+ Because it is such a big piece of code, it may seem slow, but most of it is ignored during a run because of the branching. I could have thought more about condensing it to remove similar code, but it works and it would not become faster by condensing it. I unit tested the method by printing the map before and after push. To do this I used:
 
 ```C++
 
