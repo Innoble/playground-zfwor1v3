@@ -40,6 +40,9 @@ For quests and players I used a similar representation. For players the first 4 
 My Push code you can find below. I show about half of it because it is a big method, but it should be easy to extend to include all possibilities. One important note: I don't use the -1 and -2 given for hand items. My x becomes 7 for my hand and 8 for opponent hand and 9 for disabled (empty slots or completed) quests. This is also why x needs 4 bits.
 
 
+
+::: Push Method
+
 ```C++
 
 void PushMap() //true = column, true = up or left
@@ -204,6 +207,11 @@ void PushMap() //true = column, true = up or left
 }
 
 ```
+
+:::
+
+
+
 
  Because it is such a big piece of code, it may seem slow, but most of it is ignored during a run because of the branching. I could have thought more about condensing it to remove (nearly) duplicate code, but it works and it would not become faster by condensing it. I unit tested the method by printing the map before and after push. To do this I used:
 
