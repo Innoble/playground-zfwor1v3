@@ -76,7 +76,8 @@ void PushMap() //true = column, true = up or left
 // I use this 9 because 0 to 6 are x coordinates in the row, 7 is my handtile and 8 is the opponents.
 					int x = quest & 15; // take the right 4 bits for x
 
-					if (x == 7 + player) // if the quest is in my hand, place it on the board.
+					if (x == 7 + player) 
+// if the quest is in my hand, place it on the board.
 					{
 						quest &= ~127; 
 // clear the x and y coordinates. ~127 means NOT 127 setting the first 7 bits to 0.
@@ -90,9 +91,11 @@ void PushMap() //true = column, true = up or left
 						int y = (quest >> 4) & 7; // get the y coordinate
 						if (y == id) // is the y coordinate equal to the row being pushed?
 						{
-							x--; // reduce the x coordinate because of the push to the left
+							x--; 
+// reduce the x coordinate because of the push to the left
 							quest &= (~127); // clear coordinates;
-							if (x < 0) // pushed off the board? Then take in hand
+							if (x < 0) 
+// pushed off the board? Then take in hand
 								quest |= (7 + player);
 							else
 								quest |= x | (y << 4); 
@@ -107,7 +110,8 @@ void PushMap() //true = column, true = up or left
 					int y = playerPosCopy[i] >> 4; 
 // get player y by shifting 4 to the right
 
-					if (y == id) // is the player on the row being pushed?
+					if (y == id) 
+// is the player on the row being pushed?
 					{
 						int x = playerPosCopy[i] & 7; // get the x 
 						x--;  
