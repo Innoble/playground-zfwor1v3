@@ -230,7 +230,7 @@ I will explain the second version in a separate article because it is much more 
 
 ## Search
 
-As people assumed, I used my own Smitsimax algorithm. I didn't want to let people know I used this. It is one thing to give away a tool, but another to tell people when to use it. If people knew what I used to get to rank 1 during contest, they would switch to it much more quickly and catch up more easily. If I had to risk failure by choosing this algorithm, then so should everyone else. Choosing your strategy is part of the challenge. If people already know what is good, then there is no risk to it. For a long time I was not sure I went the right way using this algorithm. I was "stuck" at around rank 10 for a day or two and then I fixed a bug that shot me up to rank 1 by a wide margin. That's when I was sure. 
+As people assumed, I used my own [Smitsimax](https://tech.io/playgrounds/36476/smitsimax) algorithm. I didn't want to let people know I used this. It is one thing to give away a tool, but another to tell people when to use it. If people knew what I used to get to rank 1 during contest, they would switch to it much more quickly and catch up more easily. If I had to risk failure by choosing this algorithm, then so should everyone else. Choosing your strategy is part of the challenge. If people already know what is good, then there is no risk to it. For a long time I was not sure I went the right way using this algorithm. I was "stuck" at around rank 10 for a day or two and then I fixed a bug that shot me up to rank 1 by a wide margin. That's when I was sure. 
 
 ### Problems with Smitsimax
 
@@ -242,7 +242,8 @@ Later on I found a way to generate ALL moves for ALL pushes. During the search f
 
 #### Summarized
 
-##### Move turn
++ Move turn: BFS generated move nodes first layer -> Push with random greedy move -> Push with random greedy move
++ Push turn: Push with cached moves (no pathfinding during 1st layer) -> Push with random greedy -> Push with random greedy
 
 
 
