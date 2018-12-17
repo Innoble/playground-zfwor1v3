@@ -4,9 +4,9 @@ This contest was a lot of fun for me. Also very intense because of the close fig
 
 ## Contents
 
--Simulation
--Search
--Optimization
+Simulation
+Search
+Optimization
 
 ## Simulation
 
@@ -52,16 +52,21 @@ void PushMap() //true = column, true = up or left
 			int handTile = mapCopy[7 + player]; // the hand tile of this player
 			if (leftUp[player])  // is it pushed left?
 			{
-				mapCopy[7 + player] = (mapRow >> 24) & 15;  // the left most tile is pushed off and placed in hand.
-				mapCopy[id] = (mapRow << 4) | handTile; // the map row is shifted 4 bits (1 tile) to the left and the handtile is added
+				mapCopy[7 + player] = (mapRow >> 24) & 15;  
+				// the left most tile is pushed off and placed in hand.
+				mapCopy[id] = (mapRow << 4) | handTile; 
+				// the map row is shifted 4 bits (1 tile) to the left and the handtile is added
 
-				for (int i = 0; i < 12; i++) // loop over all tracked quests (I track 6 per player, 3 current and 3 next if known
+				for (int i = 0; i < 12; i++) 
 				{
+				// loop over all tracked quests (I track 6 per player, 3 current and 3 next if known
+				
 					int quest = questsCopy[i]; 
 
-					if (quest == 9) // the quest is 9 if no quest exists in this slot. 
-						continue; // I use this 9 because 0 to 6 are x coordinates in the row, 7 is my handtile and 8 is the opponents.
-
+					if (quest == 9) 
+						continue; 
+					// the quest is 9 if no quest exists in this slot. 	
+                    // I use this 9 because 0 to 6 are x coordinates in the row, 7 is my handtile and 8 is the opponents.
 					int x = quest & 15; // take the right 4 bits for x
 
 					if (x == 7 + player) // if the quest is in my hand, place it on the board.
@@ -108,7 +113,7 @@ void PushMap() //true = column, true = up or left
 		}
 	}
 	
-	// At this point all row pushes are done.
+	// At this point all row pushes are done. Columns are next
 
 	for (int player = 0; player < 2; player++)
 	{
@@ -197,3 +202,7 @@ string printCodes[]
 };
 
 ```
+
+This outputs a pretty map picture when using lookups with those strings converted to bits I showed above.
+
+
