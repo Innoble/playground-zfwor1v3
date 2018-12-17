@@ -72,9 +72,12 @@ void PushMap() //true = column, true = up or left
 
 					if (x == 7 + player) // if the quest is in my hand, place it on the board.
 					{
-						quest &= ~127; // clear the x and y coordinates. ~127 means NOT 127 setting the first 7 bits to 0.
-						quest |= 6 | (id << 4); // OR with 6 (the right most x coordinate and with y shifted 4 to the left.
-						questsCopy[i] = quest; // set to array
+						quest &= ~127; 
+						// clear the x and y coordinates. ~127 means NOT 127 setting the first 7 bits to 0.
+						quest |= 6 | (id << 4); 
+						// OR with 6 (the right most x coordinate and with y shifted 4 to the left.
+						questsCopy[i] = quest; 
+						// set to array
 					}
 					else if (x < 7) // the quest is on the board
 					{
@@ -101,7 +104,7 @@ void PushMap() //true = column, true = up or left
 						int x = playerPosCopy[i] & 7; // get the x 
 						x--;  
 
-						if (x < 0) // is the x smaller than 0? Then set to the other side of the board.
+						if (x < 0) // x smaller than 0? Then set to the other side of the board.
 							x = 6;
 						playerPosCopy[i] = x | (id << 4);
 					}
@@ -122,7 +125,7 @@ void PushMap() //true = column, true = up or left
 		{
 			int id = nodeId[player];
 			int handTile = mapCopy[7 + player];
-			int shift = (6 - id) * 4; // This precalculates the amount a row has to be shifted to expose the pushed column tiles
+			int shift = (6 - id) * 4; // The amount a row has to be shifted to expose the pushed column tiles
 			int clear = ~(15 << shift); // This us used to clear the column in the spot that is being pushed.
 			if (leftUp[player])
 			{
