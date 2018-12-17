@@ -4,9 +4,9 @@ This contest was a lot of fun for me. Also very intense because of the close fig
 
 ## Contents
 
-Simulation
-Search
-Optimization
++ ### Simulation
++ ### Search
++ ### Optimization
 
 ## Simulation
 
