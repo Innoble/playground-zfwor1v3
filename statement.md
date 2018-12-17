@@ -17,7 +17,7 @@ In this post mortem I will try to explain the main things I think I did right an
 This contest was hard for beginners to get into. This is mainly because of the necessity of a push simulation. Push is complex in that you need to take into account pushes by both players on 7 possible different rows and columns. The difficulty depends greatly on your choice of board representation. I decided to go with a "bitboard". This is a difficult to handle board representation that is very fast.
 
 Bitboards can be efficient because they can be quickly modified using bit operators. My board was an int[9]. The first 7 elements were 7 map rows, the 8th integer was my hand tile and the 9th integer was my opponents hand tile. One of those integer map rows could look like this in terms of individual bits:  1001 0111 1110 1111 0011 1100 1010 
-Basically I used the map tiles we are given as input and only convert them to bits. You can do this as follows:
+.Basically I used the map tiles we are given as input and only convert them to bits. You can do this as follows:
 
 ```C++
 
