@@ -89,7 +89,8 @@ void PushMap() //true = column, true = up or left
 					else if (x < 7) // the quest is on the board
 					{
 						int y = (quest >> 4) & 7; // get the y coordinate
-						if (y == id) // is the y coordinate equal to the row being pushed?
+						if (y == id) 
+// is the y coordinate equal to the row being pushed?
 						{
 							x--; 
 // reduce the x coordinate because of the push to the left
@@ -199,7 +200,8 @@ void PushMap() //true = column, true = up or left
 
 						if (y < 0)
 							y = 6;
-						playerPosCopy[i] = id | (y << 4); // set the new player position
+						playerPosCopy[i] = id | (y << 4); 
+// set the new player position
 					}
 				}
 			}
