@@ -37,22 +37,22 @@ int StringToBits(string s)
 For quests and players I used a similar representation. For players the first 4 bits were the x -coordinate (could have used 3, reasons below). The next 3 bits were the y-coordinate. I use a player[2] array. I don't track items, only quests. In hindsight I missed an opportunity due to this lack of item tracking, more on that later. For quests I used the same coordinate representation, only I put the item id on bits 7 to 10 and the tile code (1100 etc.) on bits 11 to 14. In this way, everything is represented in the form of integers.
 
 
-My Push code you can find below. I show about half of it because it is a big method, but it should be easy to extend to include all possibilities. One important note: I don't use the -1 and -2 given for hand items. My x becomes 7 for my hand and 8 for opponent hand and 9 for disabled (empty slots or completed) quests. This is also why x needs 4 bits.
+My Push code you can find below. I show about half of it because it is a big method, but it should be easy to extend to include all possibilities. One important note: I don't use the -1 and -2 given for hand items. My x becomes 7 for my hand and 8 for opponent hand and 9 for disabled (empty slots or completed) quests. This is also why x needs 4 bits. 
 
-
+    
 
 ::: Push Method (click to uncollapse)
 
 ```C++
 
-void PushMap() //true = column, true = up or left
+void PushMap() 
 {
 	if (nodeId[0] == nodeId[1] && rowCol[0] == rowCol[1])
 		return; // This is to stop the method when deadlocked
 
 	for (int player = 0; player < 2; player++) // two player pushes
 	{
-		if (rowCol[player]) // is it a row push?
+		if (rowCol[player]) // is it a row push? Or a column push
 		{
 			int id = nodeId[player]; // which row is being pushed?
 			int mapRow = mapCopy[id]; // the map row that is being pushed
