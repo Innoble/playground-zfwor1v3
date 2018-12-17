@@ -16,6 +16,7 @@ Bitboards can be efficiënt because they use less memory and be quickly modified
 Basically I used the map tiles we are given as input and only convert them to bits. You can do this as follows:
 
 '''C++
+
 int StringToBinary(string s)
 {
 	int binary = 0;
@@ -27,6 +28,7 @@ int StringToBinary(string s)
 	}
 	return binary;
 }
+
 '''
 
 
