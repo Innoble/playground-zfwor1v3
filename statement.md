@@ -73,11 +73,11 @@ void PushMap() //true = column, true = up or left
 					if (x == 7 + player) // if the quest is in my hand, place it on the board.
 					{
 						quest &= ~127; 
-						// clear the x and y coordinates. ~127 means NOT 127 setting the first 7 bits to 0.
+					// clear the x and y coordinates. ~127 means NOT 127 setting the first 7 bits to 0.
 						quest |= 6 | (id << 4); 
-						// OR with 6 (the right most x coordinate and with y shifted 4 to the left.
+					// OR with 6 (the right most x coordinate and with y shifted 4 to the left.
 						questsCopy[i] = quest; 
-						// set to array
+					// set to array
 					}
 					else if (x < 7) // the quest is on the board
 					{
@@ -89,7 +89,8 @@ void PushMap() //true = column, true = up or left
 							if (x < 0) // pushed off the board? Then take in hand
 								quest |= (7 + player);
 							else
-								quest |= x | (y << 4); // otherwise set the new coordinates
+								quest |= x | (y << 4); 
+						    // otherwise set the new coordinates
 							questsCopy[i] = quest;
 						}
 					}
