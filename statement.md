@@ -216,24 +216,24 @@ string printCodes[]
 
 ```
 
-This outputs a pretty map picture when using lookups with those strings converted to bits I showed above.
+This outputs a pretty map picture when using  array lookups with those strings converted to bits the way I showed above.
 
 ## Pathfinding
 
-I have 3 pathfinding algorithms, two of which are very fast. They all assume you try to get the maximum amount of items. But the greedy one also makes assumptions about the order in which you do it. 
+I have 3 pathfinding algorithms, two of which are very fast. They all assume you try to get the maximum amount of items. But the greedy one also makes assumptions about the order in which you do it (closest first). 
 
 I use them as follows:
 
-+ Slow BFS with classes (pathnodes) to run only once, on move turn. I create the first layer of nodes in my search tree this way. I kept this with classes because it was easier and because changing it wouldnt help me. It needed to be different, because I needed to backtrack through the nodes to generate the movement list (strings to output). 
-+ Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way. This BFS is classless, using only with integer arrays. 
-+ Even faster greedy BFS. This assumes a player will get the closest items first and then the rest. In 99% of cases this will net the same result as the above version. I used this for the deeper search layers. 
++ Slow BFS with classes (pathnodes) to run only once, on move turn. I create the first layer of nodes in my search tree this way. I kept this with classes because it was easier and because changing it wouldnt help me. It needed to be different, because I needed to backtrack through the nodes to generate the movement list (strings to output). Therefor I need to store a parent reference.  
++ Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way. This BFS is classless, using only integer arrays. 
++ Even faster greedy BFS. This assumes a player will get the closest items first and then the rest. In 99% of cases this will net the same result as the above version. I used this for the deeper search layers (move 2 and 3). 
 
-I will explain the second version in a separate article because it is much more general, being usable for different multi's and contests.
+I will explain the second version of the BFS in a separate article because it is much more general, being usable for different multiplayers and contests.
 
 
 ## Search
 
-As people assumed, I used my own [Smitsimax](https://tech.io/playgrounds/36476/smitsimax) algorithm. I didn't want to let people know I used this. It is one thing to give away a tool, but another to tell people when to use it. If people knew what I used to get to rank 1 during contest, they would switch to it much more quickly and catch up more easily. If I had to risk failure by choosing this algorithm, then so should everyone else. Choosing your strategy is part of the challenge. If people already know what is good, then there is no risk to it. For a long time I was not sure I went the right way using this algorithm. I was "stuck" at around rank 10 for a day or two and then I fixed a bug that shot me up to rank 1 by a wide margin. That's when I was sure. 
+As people assumed, I used "my own" [(turns out it already existed)](https://www.researchgate.net/publication/224396568_CadiaPlayer_A_Simulation-Based_General_Game_Player) [Smitsimax](https://tech.io/playgrounds/36476/smitsimax) algorithm. I didn't want to let people know I used this. It is one thing to give away a tool, but another to tell people when to use it. If people knew what I used to get to rank 1 during contest, they would switch to it much more quickly and catch up more easily. If I had to risk failure by choosing this algorithm, then so should everyone else. Choosing your strategy is part of the challenge. If people already know what is good, then there is no risk to it. For a long time I was not sure I went the right way using this algorithm. I was "stuck" at around rank 10 for a day or two and then I fixed a bug that shot me up to rank 1 by a wide margin. That's when I was sure. 
 
 ### Problems with Smitsimax
 
