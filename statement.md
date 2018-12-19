@@ -243,7 +243,7 @@ I use them as follows:
 + Fast (non-greedy) BFS for the first move layer of my push turn. I cache all possible outcomes with the maximum amount of items gathered. Basically you get one move per reachable tile this way. This BFS is classless, using only integer arrays. 
 + Even faster greedy BFS. This assumes a player will get the closest items first and then the rest. In 99% of cases this will net the same result as the above version. I used this for the deeper search layers (move 2 and 3). 
 
-I will explain the second version of the BFS in a separate article because it is much more general, being usable for different multiplayers and contests.
+More information on optimizing BFS can be found here: https://tech.io/playgrounds/38626/optimizing-breadth-first-search
 
 
 ## Search
